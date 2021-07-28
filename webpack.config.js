@@ -6,7 +6,8 @@
 const path = require('path')
 
 /**
- * .resolve = 絶対パスにする(webpackは絶対パスで記述する必要がある)
+ * アウトプットする場所を指定する
+ * path.resolve = 絶対パスにする(webpackは絶対パスで記述する必要がある)
  * __dirname(ディレクトリ名)/dist をパスとする
  */
 const outputPath = path.resolve(__dirname, 'dist')
