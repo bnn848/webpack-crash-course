@@ -25,6 +25,17 @@ module.exports = {
     filename: 'main.js',
     path: outputPath
   },
+  module: { // css-loaderをモジュールとして使うため
+    rules: [
+      {
+        test: /\.css$/, // \で.をエスケープ、末尾cssのファイルを指定
+        use: [ // useは逆順(下から)ロードされる
+          'style-loader', // styleとして適用するためのローダー
+          'css-loader' // cssをモジュールとして取り込むためのローダー
+        ]
+      }
+    ]
+  },
   devServer: { // web-pack-dev-serverで起動した時にdist/main.jsを自動で開く設定
     contentBase: outputPath
   }
