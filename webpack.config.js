@@ -24,9 +24,12 @@ module.exports = {
   output: {
     filename: 'main.js',
     path: outputPath
+  },
+  devServer: { // web-pack-dev-serverで起動した時にdist/main.jsを自動で開く設定
+    contentBase: outputPath
   }
 }
 
 /**
- * 
+ * ファイルの変更を監視して自動で反映される
  */
