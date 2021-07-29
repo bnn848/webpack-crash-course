@@ -1,5 +1,21 @@
 import _ from 'lodash'
 
+// (1) default exportじゃない限り{}でくくる
+// import { Nijo, NAME } from './utilities' // 自前のファイルをインポートする際は相対パスで記述する
+
+// (2) 名前付きにするとutilitiesという任意の名前でインポートできる
+import * as utilities from './utilities'
+
+
+// utilities.jsからインポートした関数と定数をindex.jsで使うことができる
+// (1)
+// console.log(Nijo(19));
+// console.log(NAME);
+
+// (2)
+console.log(utilities.Nijo(19));
+console.log(utilities.NAME);
+
 function component() {
   const element = document.createElement('div');
   const array = ['Hello', 'webpack']
