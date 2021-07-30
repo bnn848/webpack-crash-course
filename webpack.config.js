@@ -35,6 +35,14 @@ module.exports = {
         ]
       },
       {
+        test: /\.scss$/, // sassを使うためのもの。基本はcssで最初にsass-loaderを利用する
+        use: [ // 
+          'style-loader', // 最後にstyleとして使う
+          'css-loader', // cssとしてさらにコンパイル
+          'sass-loader' // 最初にsassをコンパイル
+        ]
+      },
+      {
         test: /\.(jpe?g|png|gif|svg|ico)$/i, // (a|b)で複数許容、?はあってもなくても良いという意味、末尾iで大文字許容
         loader: 'url-loader',
         options: {

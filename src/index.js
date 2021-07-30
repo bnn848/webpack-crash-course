@@ -10,7 +10,11 @@ import * as utilities from './utilities'
 // import style from './style.css';
 import './style.css' // css-loaderを用いる場合、 style from は不要
 
+// logoアイコンをつかう
 import logo from './logo.png';
+
+// scssを使う
+import './style.scss';
 
 // utilities.jsからインポートした関数と定数をindex.jsで使うことができる
 // (1)
