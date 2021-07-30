@@ -25,6 +25,25 @@ module.exports = {
     filename: 'main.js',
     path: outputPath
   },
+  module: { // css-loaderをモジュールとして使うため
+    rules: [
+      {
+        test: /\.css$/, // \で.をエスケープ、末尾cssのファイルを指定
+        use: [ // useは逆順(下から)ロードされる
+          'style-loader', // styleとして適用するためのローダー
+          'css-loader' // cssをモジュールとして取り込むためのローダー
+        ]
+      },
+      {
+        test: /\.(jpe?g|png|gif|svg|ico)$/i, // (a|b)で複数許容、?はあってもなくても良いという意味、末尾iで大文字許容
+        loader: 'url-loader',
+        options: {
+          limit: 2048, // 2KB以上のサイズのファイルを分割して取得できる
+          name: "./images/[name].[ext]" // 一度HTML要素に変換する
+        }
+      }
+    ]
+  },
   devServer: { // web-pack-dev-serverで起動した時にdist/main.jsを自動で開く設定
     contentBase: outputPath
   }
