@@ -7,6 +7,7 @@ const path = require('path')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 /**
  * アウトプットする場所を指定する
@@ -74,7 +75,16 @@ module.exports = {
     new MiniCssExtractPlugin({ // cssを圧縮する
       filename: '[name].[hash].css' // インポートしたcssをバンドルする /name = main /hash = 被らないようにランダムで入力される
     })
-  ]
+  ],
+  optimization: { // 最適化。
+    minimizer: [new UglifyJsPlugin({ // UglifyJsPluginはUglify-jsをwebpackに渡すためだけのもの
+      uglifyOptions: { // Uglify-jsはオプションで実行したい処理を記述する
+        compress: { // GitHubみて確認する
+          drop_console: true // defaultはfalse
+        }
+      }
+    })],
+  },
 }
 
 /**
