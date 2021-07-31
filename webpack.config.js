@@ -4,6 +4,7 @@
  * npx webpack : webpack.config.jsの場所は --config オプションをつけるとできる
  */
 const path = require('path')
+const HtmlWebPackPlugin = require('html-webpack-plugin')
 
 /**
  * アウトプットする場所を指定する
@@ -28,6 +29,16 @@ module.exports = {
   module: { // css-loaderをモジュールとして使うため
     rules: [
       {
+        test: /\.jsx?$/, // webpackを使うため、.js .jsxのファイルを指定する()
+        exclude: /node_modules/, // node_modulesディレクトリ配下はトランスパイル対象から除外する
+        use: {
+          loader: "babel-loader", // babel-loaderでトランスパイルする
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        }
+      },
+      {
         test: /\.css$/, // \で.をエスケープ、末尾cssのファイルを指定
         use: [ // useは逆順(下から)ロードされる
           'style-loader', // styleとして適用するためのローダー
@@ -49,12 +60,22 @@ module.exports = {
           limit: 2048, // 2KB以上のサイズのファイルを分割して取得できる
           name: "./images/[name].[ext]" // 一度HTML要素に変換する
         }
+      },
+      {
+        test: /\.html/, // webpackでhtml-loaderを使うため
+        loader: 'html-loader'
       }
     ]
   },
   devServer: { // web-pack-dev-serverで起動した時にdist/main.jsを自動で開く設定
     contentBase: outputPath
-  }
+  },
+  plugins: [
+    new HtmlWebPackPlugin({
+      template: './src/index.html', // 雛形を作り、それをベースに使う
+      filename: './index.html' // dist配下にindex.htmlという名前で出力する
+    })
+  ]
 }
 
 /**
