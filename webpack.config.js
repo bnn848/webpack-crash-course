@@ -5,9 +5,9 @@
  */
 const path = require('path')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
-
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 /**
  * アウトプットする場所を指定する
@@ -77,13 +77,16 @@ module.exports = {
     })
   ],
   optimization: { // 最適化。
-    minimizer: [new UglifyJsPlugin({ // UglifyJsPluginはUglify-jsをwebpackに渡すためだけのもの
+    minimizer: [
+      new UglifyJsPlugin({ // UglifyJsPluginはUglify-jsをwebpackに渡すためだけのもの
       uglifyOptions: { // Uglify-jsはオプションで実行したい処理を記述する
         compress: { // GitHubみて確認する
           drop_console: true // defaultはfalse
         }
       }
-    })],
+    }),
+    new OptimizeCSSAssetsPlugin({}) // インスタンスを作成するだけ、引数のオブジェクトはなくてOK
+  ],
   },
 }
 
