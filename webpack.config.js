@@ -6,6 +6,8 @@
 const path = require('path')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 /**
  * アウトプットする場所を指定する
  * path.resolve = 絶対パスにする(webpackは絶対パスで記述する必要がある)
@@ -39,16 +41,10 @@ module.exports = {
         }
       },
       {
-        test: /\.css$/, // \で.をエスケープ、末尾cssのファイルを指定
-        use: [ // useは逆順(下から)ロードされる
-          'style-loader', // styleとして適用するためのローダー
-          'css-loader' // cssをモジュールとして取り込むためのローダー
-        ]
-      },
-      {
-        test: /\.scss$/, // sassを使うためのもの。基本はcssで最初にsass-loaderを利用する
+        test: /\.(scss|css)$/, // sassを使うためのもの。基本はcssで最初にsass-loaderを利用する
         use: [ // 
-          'style-loader', // 最後にstyleとして使う
+          // 'style-loader', // 最後にstyleとして使う
+          MiniCssExtractPlugin.loader, // 別ファイルで管理するローダーに変更
           'css-loader', // cssとしてさらにコンパイル
           'sass-loader' // 最初にsassをコンパイル
         ]
@@ -74,6 +70,9 @@ module.exports = {
     new HtmlWebPackPlugin({
       template: './src/index.html', // 雛形を作り、それをベースに使う
       filename: './index.html' // dist配下にindex.htmlという名前で出力する
+    }),
+    new MiniCssExtractPlugin({ // cssを圧縮する
+      filename: '[name].[hash].css' // インポートしたcssをバンドルする /name = main /hash = 被らないようにランダムで入力される
     })
   ]
 }
