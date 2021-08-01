@@ -31,7 +31,13 @@ module.exports = {
   },
   module: { // css-loaderをモジュールとして使うため
     rules: [
-      {
+      {/** eslint-loader */
+        enforce: "pre", // 他のloaderに先立って実行する設定
+        test: /\.jsx?/,
+        exclude: /node_modules/,
+        loader: "eslint-loader"
+      },
+      {/** babel */
         test: /\.jsx?$/, // webpackを使うため、.js .jsxのファイルを指定する()
         exclude: /node_modules/, // node_modulesディレクトリ配下はトランスパイル対象から除外する
         use: {
@@ -41,7 +47,7 @@ module.exports = {
           }
         }
       },
-      {
+      {/**css-loader */
         test: /\.(scss|css)$/, // sassを使うためのもの。基本はcssで最初にsass-loaderを利用する
         use: [ // 
           // 'style-loader', // 最後にstyleとして使う
@@ -50,7 +56,7 @@ module.exports = {
           'sass-loader' // 最初にsassをコンパイル
         ]
       },
-      {
+      {/**minify */
         test: /\.(jpe?g|png|gif|svg|ico)$/i, // (a|b)で複数許容、?はあってもなくても良いという意味、末尾iで大文字許容
         loader: 'url-loader',
         options: {
