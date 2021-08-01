@@ -86,9 +86,9 @@ module.exports = {
       }
     }),
     new OptimizeCSSAssetsPlugin({}) // インスタンスを作成するだけ、引数のオブジェクトはなくてOK
-
-  ],
+    ],
   },
+  devtool: 'eval-source-map'
 }
 
 /**
